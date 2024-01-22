@@ -1,0 +1,182 @@
+% load preamble-min, and apply geometry
+% ----------------------------------------------------------------------
+\input{./preamble/preamble-min}
+\usepackage[\thegeometry]{geometry}
+\usepackage{layout}% to get and/or display page layout details
+%
+% Fonts
+% ----------------------------------------------------------------------
+\usepackage{iftex}
+\ifPDFTeX
+	\usepackage{cmap}% make pdf files searchable and copyable
+	\usepackage[utf8]{inputenc}
+	\usepackage[T1]{fontenc}
+	\usepackage{lmodern}
+	\usepackage{amsmath,amsfonts,amssymb}
+	%
+	\usepackage{isomath}% english standards
+	%
+	\def\myfancyfont{}
+\else
+	\usepackage{amsmath,amssymb}
+	\usepackage[no-math]{fontspec}
+	%
+	\defaultfontfeatures{Ligatures=TeX}
+	%
+	% If latin modern fonts are not found using XeTex in linux:
+	%	- [ubuntu]Make sure lmodern package is installed
+	%	- [ubuntu] create a new file 09-texmffonts.conf in /etc/fonts/conf.avail/ and sym link it to ../conf.d
+	%	- [ubuntu] put in that file the directories /usr/share/texmf/fonts/opentype|truetype|type1 and /usr/share/texlive/texmf-dist/fonts/opentype|truetype|type1
+	%	- [arch] Install the aur package otf-latin-modern
+	%	- [arch] This should be optional and the config should already be there, otherwise put directories might be instead /usr/share/texmf-dist/fonts/opentype|truetype|type1 and /usr/local/share/texmf/fonts/opentype|truetype|type1
+	%	- [arch] Make sure the sym link to the tex font config exists in /etc/fonts/conf.d
+	%	- If you have added a font conf then run fc-cache -f -v
+	\setmainfont[
+		Numbers=Proportional,
+		Ligatures={TeX},
+		SlantedFont={Latin Modern Roman Slanted},
+		SmallCapsFont={Latin Modern Roman Caps},
+		ItalicFeatures={SmallCapsFeatures={FakeSlant=0.2}}
+	]{Latin Modern Roman}
+	\setsansfont[
+		Scale=MatchLowercase
+	]{Latin Modern Sans}% Note that there is no latin modern Sans Caps font nor slanted one.
+	\setmonofont[
+		Scale=MatchLowercase
+	]{Latin Modern Mono Light}
+	%
+	%\usepackage[math-style=ISO,bold-style=ISO]{unicode-math}% english standards 
+	\usepackage[math-style=french]{unicode-math}% french standards 
+	\setmathfont[Path=./fonts/math/]{latinmodern-math.otf}
+	%
+	\ifLuaTeX
+	\else
+	\fi
+	%
+	\newfontfamily\myfancyfont[
+		ItalicFont=EBGaramond12-Italic.otf,
+		Ligatures={Rare, Historic, TeX},
+		Contextuals=Alternate,
+		RawFeature={+dlig},
+		ItalicFeatures={Style=Swash}
+	]{EBGaramond12-Regular.otf}
+\fi
+
+% Some maths defs
+% ----------------------------------------------------------------------
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand*\Diff[1]{\mathop{}\!\mathrm{d^#1}}
+
+% Miscellaneous - 1
+% ----------------------------------------------------------------------
+%\usepackage{flafter}% forces floats to appear only after the place where they are defined
+\usepackage{verbatim}% for block comment
+\usepackage{graphicx}
+\graphicspath{{./figures/}}
+\usepackage{booktabs,tabularx}% better column width for tabular environment
+\usepackage{multirow}% multirow env for tabular
+\usepackage{xcolor}
+%\usepackage{tikz}% used in cover page
+%\usetikzlibrary{calc}% needed for coordinate calculation in tikz
+\usepackage{tcolorbox}% used in cover page
+\tcbuselibrary{skins}% lib for tcolorbox
+\usepackage{shadowtext}% used in cover page
+%\usepackage{listings}% code source formatting
+\usepackage{algorithm}% float wrapper
+\usepackage{algorithmicx}% typesetting environment
+\usepackage[noend]{algpseudocode}% layout for algorithmicx
+\usepackage{cite}
+\usepackage{IEEEtrantools}% needed to use \bstctlcite with IEEEtran
+\ifcheckreferences
+	\usepackage[ignoreunlbld]{refcheck}% checks for unused citations and more 
+\fi
+\usepackage[bottom]{footmisc}% make sure foot notes have constant distance with fancy foot when using raggedbottom 
+\usepackage{fancyhdr}% fancy headers and footers
+%\usepackage{shorttoc}% short table of contents
+%\usepackage[tiny, md, sc]{titlesec}
+\usepackage{titlesec}
+\pagestyle{plain}
+\usepackage{titling}% title, author, date and thanks commands
+\usepackage[Conny]{fncychap}% nice chap titles: Lenny, Conny, Bjornstrup
+%\usepackage[palatino]{quotchap}
+\usepackage{lettrine}% lettrine command
+\usepackage[titletoc]{appendix}
+\usepackage[tight,nice]{units}% provides commands: \unit, \unitfrac and \nicefrac
+\usepackage[titles]{tocloft}% table of content format
+\setlength{\cftbeforesecskip}{5pt}
+%\renewcommand{\cftchapafterpnum}{\vspace{5pt}}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftchapfont}{\normalsize \scshape}
+\renewcommand{\cftchappagefont}{\normalsize \scshape}
+%
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname IncludeInRelease\endcsname\relax
+  \usepackage{fixltx2e}% include this only for releases prior to 2015
+\fi
+%
+\usepackage{ragged2e}
+%
+\parindent 15pt
+%
+\widowpenalty=9000
+\clubpenalty=9000
+%\brokenpenalty=501
+\raggedbottom% make all pages the height of the text on that page. No need for extra vertical space (especially between section title and text).
+%
+%\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+%
+\hyphenation{net-works}% correct bad hyphenation here
+%
+\setcounter{secnumdepth}{3}% 1 = sections only, 2 = sections + subsections, 3 = sections + subsections + subsubsections
+\setcounter{tocdepth}{2}
+%
+% hyperref related packages
+% ----------------------------------------------------------------------
+% note: You might need to add hyperindex=false if "see" and "seealso" commands are not working in index generation.
+% However you should not need this, as it should have been fixed in ./preamble/index.xdy
+% See: https://en.wikibooks.org/wiki/Talk:LaTeX/Indexing#Texindy.2C_hyperref_and_textbf.2C_textit_modifiers
+% and see: http://geekographie.maieul.net/190
+%\usepackage[hidelinks,hyperindex=false]{hyperref}
+\usepackage[hidelinks]{hyperref}
+\usepackage{bookmark}
+%
+% Acronyms
+% ----------------------------------------------------------------------
+\usepackage[xindy={language=french, codepage=utf8}, style=altlist, nonumberlist]{glossaries}% glossaries
+\usepackage{glossary-mcols}
+\renewcommand*{\acronymtype}{acronym}
+\newglossary[alg]{acronym}{acr}{acn}{\acronymname}
+\makeglossaries
+%
+% locale related packages
+% ----------------------------------------------------------------------
+\usepackage[labelfont={footnotesize,up,bf,sf,singlespacing},
+			textfont={footnotesize,up,md,sf,singlespacing},
+			justification={justified},
+			singlelinecheck=false,
+			margin=0pt,
+			figurewithin=chapter,
+			tablewithin=chapter]{caption}% caption package which sets figure, table caption font, format, name etc.
+%
+\usepackage{polyglossia}
+\setmainlanguage{french}
+\setotherlanguage{english}
+% We need arabic locale for abstract-ar, however we do not load it using polyglossia. It loads bidi package which breaks fncychap and maybe other packages.
+%
+% Miscellaneous - 2
+% ----------------------------------------------------------------------
+\input{./preamble/commands}
+\input{./frontmatter/definitions}
+\input{./frontmatter/acronyms}
+\glsaddall% add all glossary/acronym entries. Instead we could call the \gls{} command where appropriate.
+
+% Set pdf meta data
+\hypersetup{
+	pdfencoding=auto,
+    pdfauthor={\theauthor},
+    pdftitle={\thetitlefrench},
+    pdfkeywords={\thekeywordsfrench}
+}
+
+
+

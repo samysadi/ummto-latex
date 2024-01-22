@@ -1,0 +1,72 @@
+% Check options
+% ----------------------------------------------------------------------
+\makeatletter%
+\newif\ifprintformat
+\@ifclasswith{book}{printformat}{\printformattrue}{\printformatfalse}
+\newif\ifcheckreferences
+\@ifclasswith{book}{checkreferences}{\checkreferencestrue}{\checkreferencesfalse}
+\newif\ifgrayfigures
+\@ifclasswith{book}{grayfigures}{\grayfigurestrue}{\grayfiguresfalse}
+\makeatother
+\ifgrayfigures
+\def\figpref{gray-}
+\else
+\def\figpref{}
+\fi
+% Line spacing
+% ----------------------------------------------------------------------
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.0}% default line spacing, up to 1.2 looks nice
+%
+% Geometry def
+% ----------------------------------------------------------------------
+% good ref: http://practicaltypography.com
+%			and: http://mirrors.ctan.org/macros/latex/contrib/geometry/geometry.pdf
+%
+\ifdefined\thegeometrytextwidth
+\else
+	\def\thegeometrytextwidth{6.0in}
+\fi
+\ifdefined\thegeometryinit
+\else
+	\def\thegeometryinit{paper=a4paper,headheight=16pt,marginparwidth=60pt,textwidth=\thegeometrytextwidth,textheight=8.5in,heightrounded,vmarginratio=8:10}
+\fi
+%
+\ifdefined\thegeometryextra
+\else
+	%\ifprintformat
+		%\def\thegeometryextra{hmarginratio=3:4,bindingoffset=0.5cm}% margins for printing
+	%\else
+		\def\thegeometryextra{hcentering,bindingoffset=0cm}% margins for electronic document
+	%\fi
+\fi
+%
+\def\thegeometry{\thegeometryinit,\thegeometryextra}
+%
+% BLANK PAGE
+% ----------------------------------------------------------------------
+\newcounter{totalblankpages}
+\setcounter{totalblankpages}{0}% set it to something just in case
+\newcounter{mypagecount}% create a new counter
+\setcounter{mypagecount}{0}% set it to something just in case
+\newenvironment{interlude}{% create a new environment for the unnumbered section(s)
+\clearpage
+\setcounter{mypagecount}{\value{page}}% use the new counter we created to hold the page count at the start of the unnumbered section
+\thispagestyle{empty}% we want this page to be empty (adjust to use a modified page style)
+\pagestyle{empty}% use the same style for subsequent pages in the unnumbered section
+}{%
+\clearpage
+\setcounter{page}{\value{mypagecount}}% restore the incremented value to the official tally of pages so the page numbering continues correctly
+}
+\ifprintformat
+	\newcommand\blankpage{%
+	\begin{interlude}
+	\null
+	\stepcounter{totalblankpages}
+	\end{interlude}
+	}
+\else
+	\newcommand\blankpage{%
+	%
+	}
+\fi

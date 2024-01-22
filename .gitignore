@@ -1,0 +1,46 @@
+# LaTeX files
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.pdf
+*.acn
+*.glo
+*.nlo
+*.xdy
+
+# LaTeX build directory
+_build/
+
+# TeXShop temporary files
+*.backup
+*.bak
+
+# Sublime Text temporary files
+*.sublime-*
+
+# Vim temporary files
+*.swp
+*.swo
+*.swn
+
+# VSCode settings
+.vscode/
+
+# Overleaf temporary files
+*.synctex(busy)
+*.synctex.gz(busy)
+*.fdb_latexmk
+*.fls
+*.latexmain
+
+# LaTeX auto-generated files
+*.dvi
+*.ps
+
+# Mac OS X Finder files
+.DS_Store
+
+# Windows Thumbs.db files
+Thumbs.db

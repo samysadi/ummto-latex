@@ -1,0 +1,106 @@
+% Chapitre 2
+%
+\chapter{Le titre du chapitre 1}
+\setfigpath{chapter-1}
+%
+\section{Introduction}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus suscipit nulla et mattis mattis. Curabitur vel tempor tellus. 
+Fusce lacinia fringilla fringilla. Vestibulum in nulla at dolor malesuada viverra. Morbi fermentum justo neque, quis aliquam quam vehicula eu. 
+Aenean eu pharetra risus. Cras id magna et mi malesuada porttitor.
+
+Aliquam varius, est et porttitor ultricies, massa mi rutrum velit, eu mattis felis leo in lorem. 
+Aenean feugiat commodo ex, vitae feugiat purus semper eget. Praesent at arcu viverra, suscipit metus quis, blandit eros. 
+Pellentesque a lacus sodales, lacinia ante at, condimentum eros. Nunc eu lacus tellus. In scelerisque eros ex, quis suscipit augue pharetra porta. 
+Nam aliquam congue metus nec bibendum. Quisque sed auctor nibh.
+
+Praesent consectetur est ut ultricies tempus. Integer placerat luctus lacinia. 
+Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Maecenas sapien nibh, egestas at eros vel, suscipit facilisis enim. 
+Ut mollis eleifend ligula, quis sagittis enim consequat nec. Phasellus non lectus a nulla gravida interdum sit amet non erat. 
+Nulla id luctus leo, sed consectetur magna. Cras tincidunt, lacus vel varius mollis, elit turpis finibus sem, ac viverra dolor mi id leo. 
+In tellus lorem, cursus in iaculis vel, tristique vitae lacus. Aenean at ornare felis. Phasellus dapibus sit amet justo eu elementum. 
+Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque iaculis mauris at lorem venenatis hendrerit. 
+Vestibulum purus diam, sagittis sed mauris a, congue efficitur lacus. Nullam suscipit justo et arcu porta lobortis.
+
+\section{La sûreté de fonctionnement}
+La sûreté de fonctionnement a été définie par J-C.~Laprie dans~\cite{laprie1985dependable} comme étant
+\enquote{la propriété qui permet aux utilisateurs d'un système de placer une confiance justifiée dans le service qu'il leur délivre}.
+Dans une autre définition~\cite{villemeur1988surete}, A.~Villemeur définit la sûreté de fonctionnement
+comme étant \enquote{l'aptitude d'une entité à satisfaire à une ou plusieurs fonctions requises dans des conditions données}.
+
+Nous présentons dans ce qui suit ses attributs, ses entraves et ses moyens.
+
+\subsection{Attributs}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus suscipit nulla et mattis mattis. Curabitur vel tempor tellus. 
+Fusce lacinia fringilla fringilla. Vestibulum in nulla at dolor malesuada viverra. Morbi fermentum justo neque, quis aliquam quam vehicula eu. 
+Aenean eu pharetra risus. Cras id magna et mi malesuada porttitor.
+
+\subsubsection{La fiabilité}
+La fiabilité, en anglais \inenglish{reliability}, est la probabilité qu'a un système à remplir sa mission
+dans un intervalle de temps donné et dans certaines conditions spécifiées dans
+son cahier des charges.
+
+Pour quantifier la fiabilité d'un système, il est courant de se référer
+au temps moyen avant la première panne, noté $\mathit{MTTF}$ (de l'anglais \inenglish{Mean Time To Failure}).
+Dans ce cas, si $\mathit{Rel}(t)$ représente la fiabilité du système durant
+la durée $t$, alors l'équation suivante définit le $\mathit{MTTF}$ du système~:
+\begin{equation}
+\mathit{MTTF} = \int_{0}^{\infty} \mathit{Rel}(t) \diff t
+\end{equation}
+
+Lorsqu'un système est composé de plusieurs composants dont le $\mathit{MTTF}$ est
+connu, alors le $\mathit{MTTF}$ de ce système est défini par l'équation suivante~:
+\begin{equation}
+\mathit{MTTF}_\text{système} = \frac{\mathit{MTTF}_\text{composant}}{\text{nombre~de~composants}}
+\end{equation}
+
+L'équation précédente implique que plus le nombre de composants constituant un système est grand, moins ce système
+est fiable.
+
+\subsubsection{La maintenabilité}
+La maintenabilité, anglicisme de \inenglish{maintainability}, définit la probabilité qu'un
+système en panne à un instant donné soit réparé après une certaine durée.
+
+Cette aptitude est quantifiable en se référant au temps moyen avant la réparation,
+noté $\mathit{MTTR}$ (de l'anglais \inenglish{Mean Time To Repair}).
+Dans ce cas, si $\mathit{Mnt}(t)$ représente la probabilité qu'une réparation soit effectuée
+durant la durée $t$, alors l'équation suivante définit le $\mathit{MTTR}$ du système~:
+\begin{equation}
+\mathit{MTTR} = \int_{0}^{\infty} (1 - \mathit{Mnt}(t)) \diff t
+\end{equation}
+
+Lorsque le système est réparable, il est courant d'utiliser le temps moyen
+entre pannes, noté $\mathit{MTBF}$ (de l'anglais \inenglish{Mean Time Between Failures}),
+au lieu du $\mathit{MTTF}$ pour quantifier la fiabilité du système.
+Dans ce cas, le $\mathit{MTBF}$ mesure la durée moyenne entre deux
+pannes (cf.\ \figurename~\ref{fig:tf_mttf}).
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.8]{\figpath/\figpref mttf.eps}
+	\caption{\label{fig:tf_mttf}Séquence des événements de panne et de réparation dans un système réparable.}
+\end{figure}
+
+\subsection{Entraves}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus suscipit nulla et mattis mattis. Curabitur vel tempor tellus. 
+Fusce lacinia fringilla fringilla. Vestibulum in nulla at dolor malesuada viverra. Morbi fermentum justo neque, quis aliquam quam vehicula eu. 
+Aenean eu pharetra risus. Cras id magna et mi malesuada porttitor.
+
+\subsection{Moyens}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus suscipit nulla et mattis mattis. Curabitur vel tempor tellus. 
+Fusce lacinia fringilla fringilla. Vestibulum in nulla at dolor malesuada viverra. Morbi fermentum justo neque, quis aliquam quam vehicula eu. 
+Aenean eu pharetra risus. Cras id magna et mi malesuada porttitor.
+
+\section{Titre 2}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus suscipit nulla et mattis mattis. Curabitur vel tempor tellus. 
+Fusce lacinia fringilla fringilla. Vestibulum in nulla at dolor malesuada viverra. Morbi fermentum justo neque, quis aliquam quam vehicula eu. 
+Aenean eu pharetra risus. Cras id magna et mi malesuada porttitor.
+
+\section{Conclusion}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus suscipit nulla et mattis mattis. Curabitur vel tempor tellus. 
+Fusce lacinia fringilla fringilla. Vestibulum in nulla at dolor malesuada viverra. Morbi fermentum justo neque, quis aliquam quam vehicula eu. 
+Aenean eu pharetra risus. Cras id magna et mi malesuada porttitor.
+
+Aliquam varius, est et porttitor ultricies, massa mi rutrum velit, eu mattis felis leo in lorem. 
+Aenean feugiat commodo ex, vitae feugiat purus semper eget. Praesent at arcu viverra, suscipit metus quis, blandit eros. 
+Pellentesque a lacus sodales, lacinia ante at, condimentum eros. Nunc eu lacus tellus. In scelerisque eros ex, quis suscipit augue pharetra porta. 
+Nam aliquam congue metus nec bibendum. Quisque sed auctor nibh.

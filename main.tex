@@ -1,0 +1,89 @@
+%
+% Available class options:
+%	- printformat: to produce the final document to be printed. Omit to produce electronic document.
+%	- checkreferences: set to check for unused citations
+%	- grayfigures: use gray figures
+%	- I would prefer to set openright
+%
+\documentclass[11pt,openany,twoside,printformat]{book}
+%
+\input{./preamble/preamble}
+
+% It is recommended to either use XeTeX or LuaTeX
+% We do not recommend using PDFTeX (and is now also not supported because of polyglossia usage)
+%\RequireXeTeX{}
+
+\usepackage{lipsum}
+%\usepackage{mynotes}
+%\usepackage{mwe}
+
+\begin{document}
+%
+\frontmatter
+\input{./frontmatter/title-page-withcopyright}%
+\blankpage
+%\input{./frontmatter/copyright}%
+\input{./frontmatter/acknowledgments}%
+\blankpage
+\input{./frontmatter/all-abstracts}%
+\blankpage
+% toc
+% ----------------------------------------------------------------------
+\renewcommand\contentsname{Table des matières}
+\tableofcontents
+\blankpage
+% Chapters
+% ----------------------------------------------------------------------
+\mainmatter
+\input{./chapters/introduction}
+\blankpage
+\part{État de l'art}
+\blankpage
+\input{./chapters/chapter-1}
+\blankpage
+\input{./chapters/chapter-2}
+\blankpage
+\part{Contributions}
+\blankpage
+\input{./chapters/chapter-3}
+\blankpage
+\input{./chapters/chapter-4}
+\blankpage
+%
+% Appendixes
+% ----------------------------------------------------------------------
+\part*{Annexes\addcontentsline{toc}{part}{Annexes}}
+\appendix
+\input{./appendixes/appendix-a}
+\input{./appendixes/appendix-b}
+\nullpart
+%
+\backmatter
+% Bibliography
+% ----------------------------------------------------------------------
+\ifcheckreferences
+	\nocite{*}% include all references
+\fi
+\begin{otherlanguage}{english}
+\newcommand{\BIBdecl}{\setlength{\itemsep}{0em}}
+\renewcommand\bibname{Bibliographie}
+\bstctlcite{IEEEexample:BSTcontrol}% enable IEEE custom controls defined in bib file (needs package IEEEtrantools)
+\bibliographystyle{./preamble/IEEEtranS-fr}% use IEEEtran for natural order, and IEEEtranS for sorted
+\bibliography{IEEEfull,./bibliography}
+\end{otherlanguage}
+% list of figures
+% ----------------------------------------------------------------------
+\renewcommand\listfigurename{Liste des figures}
+\listoffigures
+% list of tables
+% ----------------------------------------------------------------------
+\renewcommand\listtablename{Liste des tableaux}
+\listoftables
+\blankpage
+% list of acronyms
+% ----------------------------------------------------------------------
+\listofacronyms
+% Etc
+% ----------------------------------------------------------------------
+%
+\end{document}

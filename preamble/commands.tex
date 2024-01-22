@@ -1,0 +1,282 @@
+% 
+% Definitions Commands
+% ----------------------------------------------------------------------
+\makeatletter
+\ifdefined\theauthor
+	\def\@author{\theauthor}
+\else
+	\def\author#1{\gdef\@author{#1}}
+	\def\theauthor{\@author}
+\fi
+\def\titlefrench#1{\gdef\@titlefrench{#1}}
+\def\thetitlefrench{\@titlefrench}
+\def\titleenglish#1{\gdef\@titleenglish{#1}}
+\def\thetitleenglish{\@titleenglish}
+\def\keywordsfrench#1{\gdef\@keywordsfrench{#1}}
+\def\thekeywordsfrench{\@keywordsfrench}
+\def\keywordsenglish#1{\gdef\@keywordsenglish{#1}}
+\def\thekeywordsenglish{\@keywordsenglish}
+\def\advisor#1{\gdef\@advisor{#1}}
+\def\theadvisor{\@advisor}
+\def\degreeyear#1{\gdef\@degreeyear{#1}}
+\def\thedegreeyear{\@degreeyear}
+\def\degreemonth#1{\gdef\@degreemonth{#1}}
+\def\thedegreemonth{\@degreemonth}
+\def\degreeday#1{\gdef\@degreeday{#1}}
+\def\thedegreeday{\@degreeday}
+\makeatother
+
+
+%
+% Styling Commands
+% ----------------------------------------------------------------------
+%
+
+\definecolor{chaptergrey}{rgb}{0.1000, 0.1600, 0.0060}%
+\definecolor{hdrrule}{rgb}{0.4000, 0.4000, 0.4000}%
+
+\fancypagestyle{empty}{
+	\fancyhf{}
+	\cfoot{}%\thepage}
+	\renewcommand{\headrulewidth}{0pt}% header horizontal line
+}
+
+\fancypagestyle{emptynonum}{
+	\fancyhf{}
+	\cfoot{}
+	\renewcommand{\headrulewidth}{0pt}% header horizontal line
+}
+
+\makeatletter
+\@ifclasswith{book}{openany}{%
+	\renewcommand*{\cleardoublepage}{\clearpage}%
+}{%
+	\renewcommand*{\cleardoublepage}{
+		\clearpage
+		\if@twoside
+			\ifodd
+				\c@page
+			\else
+				\hbox{}%
+				\thispagestyle{empty}%
+				
+				\newpage%
+				\if@twocolumn\hbox{}
+					\newpage
+				\fi
+			\fi
+		\fi
+	}%
+}
+\makeatother
+
+% page header
+% ----------------------------------------------------------------------
+\fancyhf{}% clear header
+%\fancyhead[RO,LE]{\thepage}
+%\fancyhead[LO]{\normalfont\nouppercase{\rightmark}}
+%\fancyhead[RE]{\normalfont\nouppercase{\leftmark}}
+
+\newcounter{realpagenum}
+\fancyhead[RO,RE]{%
+\setcounter{realpagenum}{\value{page}}%
+\addtocounter{realpagenum}{\value{totalblankpages}}%
+\ifodd\value{realpagenum}{\thepage}\else{\normalfont\nouppercase{\leftmark}}\fi%
+}
+\fancyhead[LO,LE]{%
+\setcounter{realpagenum}{\value{page}}%
+\addtocounter{realpagenum}{\value{totalblankpages}}%
+\ifodd\value{realpagenum}{\normalfont\nouppercase{\rightmark}}\else{\thepage}\fi%
+}
+
+\pretocmd{\headrule}{\color{hdrrule}}{}{}
+%\renewcommand{\headrulewidth}{0pt}% no horizontal line in headers
+%\renewcommand{\footrulewidth}{0.4pt}% footer horizontal line
+\pagestyle{fancy}
+%
+%\def\markchapter#1{\markboth{\MakeUppercase{#1}}{\MakeUppercase{#1}}}
+\def\markchapter#1{\markboth{#1}{#1}}
+\def\addchapter#1{\cleardoublepage\phantomsection{}\markchapter{#1}}% adds chapter but does not list it in toc
+\def\addchaptertoc#1{\addchapter{#1}\addcontentsline{toc}{chapter}{#1}}% adds chapter and lists it in toc
+\pretocmd{\tableofcontents}{\addchaptertoc{\contentsname}}{}{}
+\newcommand{\listspart}{\addcontentsline{toc}{chapter}{Listes}}
+\newif\ifListsStarted
+\ListsStartedfalse
+\newcommand{\listsname}{Listes}
+\newcommand{\checkListsStarted}{\ifListsStarted\else\addcontentsline{toc}{chapter}{\listsname}\ListsStartedtrue\fi}
+\pretocmd{\listoffigures}{\addchapter{\listfigurename}\checkListsStarted\addcontentsline{toc}{section}{\listfigurename}}{}{}
+\pretocmd{\listoftables}{\addchapter{\listtablename}\checkListsStarted\addcontentsline{toc}{section}{\listtablename}}{}{}
+\pretocmd{\printnomenclature}{\addchapter{\nomname}\checkListsStarted\addcontentsline{toc}{section}{\nomname}}{}{}
+\newcommand\listacronymname{Liste des abréviations, sigles et acronymes}
+\newcommand\listofacronyms{\addchapter{\listacronymname}\checkListsStarted\addcontentsline{toc}{section}{\listacronymname}\printglossary[type=\acronymtype,title=\listacronymname,style=mcoltree,nogroupskip]}
+\pretocmd{\printindex}{\addchaptertoc{\indexname}}{}{}
+\pretocmd{\bibliography}{\addchaptertoc{\bibname}}{}{}
+\makeatletter
+\newcounter{ChapterCounter}
+\renewcommand{\theHsection}{\theChapterCounter.\the\value{section}}% used by hyperref, we modified this to make sure we provide unique string when using chapter*
+\newif\ifChapterIsStarred
+\renewcommand{\thesection}{\ifChapterIsStarred\else\the\value{chapter}.\fi\the\value{section}}% we modified this to hide chapter number when using chapter*
+\def\startschapternotext#1{%
+	\ChapterIsStarredtrue%
+	\stepcounter{ChapterCounter}%
+	\phantomsection\markchapter{#1}%
+	\setcounter{section}{0}%
+}
+\pretocmd{\@schapter}{%
+	\startschapternotext{#1}
+}{}{}
+\pretocmd{\@chapter}{%
+	\ChapterIsStarredfalse%
+	\stepcounter{ChapterCounter}%
+}{}{}
+\if@twoside
+	% chapter title in even pages and section in odd pages
+	\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter.\ #1}{\chaptername\ \thechapter.\ #1}}
+	\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\else
+	% chapter title in both odd and even pages and no section
+	\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter.\ #1}{\chaptername\ \thechapter.\ #1}}
+	\renewcommand{\sectionmark}[1]{}
+\fi
+\makeatother
+
+% front style
+% ----------------------------------------------------------------------
+\renewcommand{\frontmatter}{
+	\pagenumbering{roman}
+}
+
+% main style
+% ----------------------------------------------------------------------
+\renewcommand{\mainmatter}{
+	\cleardoublepage
+	\setcounter{page}{1}
+	\pagenumbering{arabic}
+}
+
+% back style
+% ----------------------------------------------------------------------
+\renewcommand{\backmatter}{
+	\cleardoublepage
+}
+
+% etc
+% ----------------------------------------------------------------------
+
+\newcommand{\nullpart}{
+	\bookmarksetup{startatroot}% Use bookmark package so that all following chapters appear in the root (no part)
+}
+
+\newenvironment{copyrightpage}{
+	\clearpage{}% appears at the verso of the title page with year, author, the publisher, the ISSN number, etc. 
+	\null\vspace*{\fill}
+	\begin{center}
+}{
+	\end{center}
+	\null
+}
+
+\newenvironment{dedications}{
+	\cleardoublepage
+	\null\vspace*{\stretch{1}}
+	\begin{flushright}
+	\large\itshape\myfancyfont
+}{
+	\end{flushright}
+	\vspace*{\stretch{2}}\null
+}
+
+\newenvironment{abstract}{
+	\par\noindent\textbf{\small\abstractname}%
+	\par%
+}{
+}
+
+\def\acknowledgmentsname{Remerciements}
+\newenvironment{acknowledgments}{
+	\chapter*{\acknowledgmentsname}
+	\addcontentsline{toc}{chapter}{\acknowledgmentsname}
+	\setstretch{1.2}
+	\large\itshape
+}{
+}
+
+\def\prefacename{Préface}
+\newenvironment{preface}{
+	\chapter*{\prefacename}
+	\addcontentsline{toc}{chapter}{\prefacename}
+}{
+}
+
+\def\listofpublicationsname{Nos publications}
+\newenvironment{listofpublications}{
+	\chapter*{\listofpublicationsname}
+	\addcontentsline{toc}{chapter}{\listofpublicationsname}
+}{
+}
+
+\newcommand{\inenglish}[1]{\textenglish{\textit{#1}}}% foreign langage for french should be in italic
+
+\makeatletter
+\def\setfigpath#1{\gdef\@figpath{#1}}
+\def\figpath{\@figpath}
+\makeatother
+
+\captionsetup{%
+	figurename=Figure,
+	tablename=Tableau
+}
+%\AtBeginDocument{%
+%\renewcommand\figurename{\textsc{Figure}}
+%\renewcommand\tablename{\textsc{Tableau}}
+%}
+
+% Algorithms
+% ----------------------------------------------------------------------
+% numbering
+\makeatletter 
+\renewcommand\thealgorithm{\thechapter.\arabic{algorithm}} 
+\@addtoreset{algorithm}{chapter} 
+\makeatother
+
+% locale
+\makeatletter
+\newcommand{\newalgname}[1]{%
+  \renewcommand{\ALG@name}{#1}%
+}
+\newalgname{Algorithme}
+\renewcommand{\listalgorithmname}{Liste des \ALG@name s}
+\makeatother
+
+\renewcommand{\algorithmicrequire}{\textbf{Entrée:}}
+\renewcommand{\algorithmicensure}{\textbf{Sortie:}}
+\renewcommand{\algorithmicend}{\textbf{fin}}
+\renewcommand{\algorithmicif}{\textbf{si}}
+\renewcommand{\algorithmicthen}{\textbf{alors}}
+\renewcommand{\algorithmicelse}{\textbf{sinon}}
+\renewcommand{\algorithmicfor}{\textbf{pour}}
+\renewcommand{\algorithmicforall}{\textbf{pour chaque}}
+\renewcommand{\algorithmicdo}{\textbf{faire}}
+\renewcommand{\algorithmicwhile}{\textbf{tant que}}
+\renewcommand{\algorithmicrepeat}{\textbf{répéter}}
+\renewcommand{\algorithmicuntil}{\textbf{jusqu'à}}
+\renewcommand{\algorithmicreturn}{\textbf{retourner}}
+\newcommand{\algorithmicelsif}{\algorithmicelse\ \algorithmicif}
+\newcommand{\algorithmicendif}{\algorithmicend\ \algorithmicif}
+\newcommand{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}
+
+
+% other styling
+% ----------------------------------------------------------------------
+
+\newcommand{\enquote}[1]{«\,#1\,»}
+
+\newcommand{\manualpagebreak}{\pagebreak}
+
+% Copyright
+% ----------------------------------------------------------------------
+%\begin{copyrightpage}
+%	\copyright{} \thedegreeyear{} \theauthor{}
+%
+%	TOUS DROITS RÉSERVÉS
+%\end{copyrightpage}

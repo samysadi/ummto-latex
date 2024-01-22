@@ -1,0 +1,43 @@
+% definitions
+%
+% Commands
+% ----------------------------------------------------------------------
+\makeatletter
+\ifdefined\theauthor
+	\def\@author{\theauthor}
+\else
+	\def\author#1{\gdef\@author{#1}}
+	\def\theauthor{\@author}
+\fi
+\def\titlefrench#1{\gdef\@titlefrench{#1}}
+\def\thetitlefrench{\@titlefrench}
+\def\titleenglish#1{\gdef\@titleenglish{#1}}
+\def\thetitleenglish{\@titleenglish}
+\def\keywordsfrench#1{\gdef\@keywordsfrench{#1}}
+\def\thekeywordsfrench{\@keywordsfrench}
+\def\keywordsenglish#1{\gdef\@keywordsenglish{#1}}
+\def\thekeywordsenglish{\@keywordsenglish}
+\def\advisor#1{\gdef\@advisor{#1}}
+\def\theadvisor{\@advisor}
+\def\degreeyear#1{\gdef\@degreeyear{#1}}
+\def\thedegreeyear{\@degreeyear}
+\def\degreemonth#1{\gdef\@degreemonth{#1}}
+\def\thedegreemonth{\@degreemonth}
+\def\degreeday#1{\gdef\@degreeday{#1}}
+\def\thedegreeday{\@degreeday}
+\makeatother
+%
+% Values
+% ----------------------------------------------------------------------
+\date{\today}% define date as today
+\titlefrench{Le titre du mémoire (modifiable dans preamble/definitions.tex)}
+\keywordsfrench{Mot clé 1, Mot clé 2, Mot clé 3, Mot clé 4, Mot clé 5}
+\titleenglish{The titre of the document in english}
+\keywordsenglish{Keyword 1, Keyword 2, Keyword 3, Keyword 4, Keyword 5}
+\author{Prénom NOM \textnormal{et} Prénom NOM}
+\advisor{Prénom NOM}
+
+% ... about the degree.
+\degreeyear{2024}
+\degreemonth{mai}
+\degreeday{26}
