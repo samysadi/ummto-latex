@@ -95,6 +95,39 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus suscipit null
 Fusce lacinia fringilla fringilla. Vestibulum in nulla at dolor malesuada viverra. Morbi fermentum justo neque, quis aliquam quam vehicula eu. 
 Aenean eu pharetra risus. Cras id magna et mi malesuada porttitor.
 
+\subsection{Exemple d'un tableau}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus suscipit nulla et mattis mattis. Curabitur vel tempor tellus. 
+Fusce lacinia fringilla fringilla. Vestibulum in nulla at dolor malesuada viverra. Morbi fermentum justo neque, quis aliquam quam vehicula eu. 
+Aenean eu pharetra risus. Cras id magna et mi malesuada porttitor.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus suscipit nulla et mattis mattis. Curabitur vel tempor tellus. 
+Fusce lacinia fringilla fringilla. Vestibulum in nulla at dolor malesuada viverra. Morbi fermentum justo neque, quis aliquam quam vehicula eu. 
+Aenean eu pharetra risus. Cras id magna et mi malesuada porttitor.
+
+Voici un tableau (cf.\ \tablename~\ref{tab:com_inputs}).
+
+\newcommand{\mymultilinescell}[2][c]{\begin{tabular}[c]{@{}#1@{}}#2\end{tabular}}
+\begin{table}
+\caption{\label{tab:com_inputs}Legende du tableau (...).}
+\centering
+\begin{tabular}{|l|l|c|c|c|}
+\hline
+\bfseries Paramètre & \bfseries Description &	\multicolumn{3}{c|}{\bfseries Valeurs}\\
+\hline
+$\mathit{In}_0$ & Taille du Cluster &	30	&	200	&	5000\\
+\hline
+$\mathit{In}_1$ & Taux de panne &	\mymultilinescell[c]{faible \\ \textit{mttf}=50000h }	&	\mymultilinescell[c]{moyen \\ \textit{mttf}=5000h}	&	\mymultilinescell[c]{haut \\ \textit{mttf}=500h}\\
+\hline
+$\mathit{In}_2$ & \mymultilinescell[l]{Fréquence de \\ Check\-pointing} &	\mymultilinescell[c]{faible \\ $3/h$}	&	\mymultilinescell[c]{moyen \\ $12/h$}	&	\mymultilinescell[c]{haut \\ $60/h$}\\
+\hline
+$\mathit{In}_3$ & \mymultilinescell[l]{Fréquence des \\ Com\-mu\-ni\-ca\-tions} &	\mymultilinescell[c]{faible \\ $10/h$}	&	\mymultilinescell[c]{moyen \\ $500/h$}	&	\mymultilinescell[c]{haut \\ $3000/h$}\\
+\hline
+$\mathit{In}_4$ & \mymultilinescell[l]{Pourcentage moyen \\ d'interlocuteurs dans le cluster} &	5\%	&	20\%	&	60\%\\
+\hline
+\end{tabular}
+\end{table}
+
 \section{Conclusion}
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus suscipit nulla et mattis mattis. Curabitur vel tempor tellus. 
 Fusce lacinia fringilla fringilla. Vestibulum in nulla at dolor malesuada viverra. Morbi fermentum justo neque, quis aliquam quam vehicula eu. 
